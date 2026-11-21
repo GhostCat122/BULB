@@ -1,4 +1,5 @@
 import { useIntervalFn } from '@vueuse/core'
+import { useRuntimeConfig } from '#app'
 import { useConfirm } from 'primevue/useconfirm'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -10,12 +11,13 @@ export default function useVersionTracking() {
   const { t } = useI18n()
   const { applicationVersion } = useVersion()
   const pollingRate = import.meta.env.VITE_APP_VERSION_POLLING_RATE
+  const baseURL = useRuntimeConfig().app.baseURL
 
   const latestVersion = ref<string>(applicationVersion)
   const { pause } = useIntervalFn(check, pollingRate)
 
   function check() {
-    fetch('/version.txt')
+    fetch(`${baseURL}version.txt`)
       .then(res => res.text())
       .then(text => text.trim())
       .then((version) => {

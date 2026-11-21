@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'BULB • Beautiful Urban Line Builder',
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: `${process.env.NUXT_APP_BASE_URL ?? '/'}favicon.ico` }],
     },
   },
 
