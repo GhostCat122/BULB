@@ -8,17 +8,19 @@ const {
   suffix = '',
   shape,
   color,
+  textColor: forcedTextColor = undefined,
 } = defineProps<{
   index: string
   prefix?: string
   suffix?: string
   shape: IndexShape
   color: string
+  textColor?: string
 }>()
 
 const NARROW_CHARS = []
 
-const textColor = computed(() => textContrast(color) ? 'var(--light-text)' : 'var(--dark-text)')
+const textColor = computed(() => forcedTextColor ?? (textContrast(color) ? 'var(--light-text)' : 'var(--dark-text)'))
 </script>
 
 <template>

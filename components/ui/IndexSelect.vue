@@ -3,6 +3,7 @@ import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { findLineByValue, getLinesByMode } from '~/data/lines'
 import { useCustomLineIndices } from '~/stores/useCustomLineIndices'
+import { useNetwork } from '~/stores/useNetwork'
 
 const { mode } = defineProps<{
   mode: Mode | null
@@ -13,6 +14,7 @@ const emit = defineEmits<{
 const index = defineModel<LineIndex | null>({ required: true })
 const { getModeIndices, findIndexById } = useCustomLineIndices()
 const { t } = useI18n()
+const network = useNetwork()
 
 const availableDefaultLines = computed(() => getLinesByMode(mode))
 const availableCustomLines = computed(() => getModeIndices(mode).map((it: CustomLineIndexDescription) => ({
@@ -22,12 +24,25 @@ const availableCustomLines = computed(() => getModeIndices(mode).map((it: Custom
   },
   label: t('components.line_index_select.line_name', { index: `${it.prefix}${it.index}${it.suffix}` }),
 })))
+const availableNetworkLines = computed(() => network.getModeIndices(mode).map((it: CustomLineIndexDescription) => ({
+  value: {
+    mode: it.mode,
+    $customLineIndex: { id: it.id },
+  },
+  label: it.name ?? t('components.line_index_select.line_name', { index: `${it.prefix}${it.index}${it.suffix}` }),
+})))
 const availableLines = computed(() => {
   let options: { label: string, items: any[] }[] = []
   if (availableDefaultLines.value.length > 0) {
     options = options.concat({
       label: t('components.line_index_select.official_indices'),
       items: availableDefaultLines.value,
+    })
+  }
+  if (availableNetworkLines.value.length > 0) {
+    options = options.concat({
+      label: t('components.line_index_select.network_indices', { name: network.name }),
+      items: availableNetworkLines.value,
     })
   }
   if (availableCustomLines.value.length > 0) {
@@ -60,7 +75,7 @@ function indexToChoice(index: LineIndex | null): IndexChoice<LineIndex> | null {
     if (customIndex === null) return null
     return {
       value: index,
-      label: t('components.line_index_select.line_name', { index: `${customIndex.prefix}${customIndex.index}${customIndex.suffix}` }),
+      label: customIndex.name ?? t('components.line_index_select.line_name', { index: `${customIndex.prefix}${customIndex.index}${customIndex.suffix}` }),
       color: customIndex.color,
     }
   }

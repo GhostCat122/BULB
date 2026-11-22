@@ -4,6 +4,8 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import OpenPresetButton from '~/components/navigation/menu/OpenPresetButton.vue'
 import useLoadProject from '~/composables/useLoadProject'
+import useNetworkFile from '~/composables/useNetworkFile'
+import { useNetwork } from '~/stores/useNetwork'
 import { useProject } from '~/stores/useProject'
 
 const { reset } = useProject()
@@ -13,6 +15,8 @@ const showSaveDialog = ref(false)
 const showTroubleshootingDialog = ref(false)
 
 const importProject = useLoadProject()
+const network = useNetwork()
+const { importNetwork, exportNetwork, resetNetwork } = useNetworkFile()
 
 const confirm = useConfirm()
 const { t } = useI18n()
@@ -46,6 +50,37 @@ function newProject() {
       @click="showLineIndexDirectory = true"
     />
     <Divider />
+    <div class="px-3 pb-1 text-sm opacity-70 flex items-center gap-2">
+      <span class="i-tabler-route-2" />
+      <span>{{ $t('ui.menu.network_current', { name: network.name }) }}</span>
+      <span v-if="network.isDefault" class="text-xs">({{ $t('ui.menu.network_default') }})</span>
+    </div>
+    <Button
+      pt:root:class="important-justify-start"
+      :label="$t('ui.menu.network_import')"
+      severity="secondary"
+      icon="i-tabler-file-import"
+      text
+      @click="importNetwork()"
+    />
+    <Button
+      pt:root:class="important-justify-start"
+      :label="$t('ui.menu.network_export')"
+      severity="secondary"
+      icon="i-tabler-file-export"
+      text
+      @click="exportNetwork()"
+    />
+    <Button
+      v-if="!network.isDefault"
+      pt:root:class="important-justify-start"
+      :label="$t('ui.menu.network_reset')"
+      severity="secondary"
+      icon="i-tabler-restore"
+      text
+      @click="resetNetwork()"
+    />
+    <Divider />
     <Button
       pt:root:class="important-justify-start"
       :label="$t('ui.menu.new_project')"
@@ -72,6 +107,7 @@ function newProject() {
       @click="showSaveDialog = true"
     />
     <ExportPngButton />
+    <ExportSvgButton />
     <ExportPdfButton />
     <Divider />
     <Button

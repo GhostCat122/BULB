@@ -1,21 +1,66 @@
 <script setup lang="ts">
-import { useEventBus } from '@vueuse/core'
+import { useEventBus, useEventListener } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { computed, onBeforeUnmount, onMounted, provide, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from 'vue'
 import useExportMap from '~/composables/useExportMap'
+import useSvgExportMap from '~/composables/useSvgExportMap'
 import { useProjectVersionCheck } from '~/composables/useProjectVersionCheck'
 import useVersion from '~/composables/useVersion'
+import { useEditorView } from '~/stores/useEditorView'
 import { useProject } from '~/stores/useProject'
-import { ExportSignal, LineContextKey } from '~/utils/symbols'
+import { ExportSignal, ExportSvgSignal, LineContextKey } from '~/utils/symbols'
 
 const { version, line } = storeToRefs(useProject())
 const exportMap = useExportMap()
 const exportSignal = useEventBus(ExportSignal)
+const exportSvgMap = useSvgExportMap()
+const exportSvgSignal = useEventBus(ExportSvgSignal)
 const { projectMinimumVersion } = useVersion()
 const checkVersion = useProjectVersionCheck()
 
 const el = ref()
 const error = ref(false)
+const viewport = ref<HTMLElement>()
+const deadZone = ref<HTMLElement>()
+
+// Zoom d'affichage : remis à 100 % pendant les exports pour ne pas modifier le résultat
+const view = useEditorView()
+const exporting = ref(false)
+const effectiveZoom = computed(() => (exporting.value ? 1 : view.zoom))
+
+async function withNaturalZoom(task: () => Promise<unknown> | unknown) {
+  exporting.value = true
+  await nextTick()
+  await new Promise(resolve => requestAnimationFrame(() => resolve(null)))
+  try {
+    await task()
+  } finally {
+    exporting.value = false
+  }
+}
+
+// Cmd/Ctrl + molette (ou pincement sur trackpad) pour zoomer
+useEventListener(viewport, 'wheel', (e: WheelEvent) => {
+  if (!e.ctrlKey && !e.metaKey) {
+    return
+  }
+  e.preventDefault()
+  view.setZoom(view.zoom * Math.exp(-e.deltaY * 0.0025))
+}, { passive: false })
+
+// Ajuster : le plan entier tient dans la zone visible
+watch(() => view.fitRequest, () => {
+  if (!el.value || !viewport.value || !deadZone.value) {
+    return
+  }
+  const rect = (el.value as HTMLElement).getBoundingClientRect()
+  const naturalW = rect.width / view.zoom
+  const naturalH = rect.height / view.zoom
+  const pad = Number.parseFloat(getComputedStyle(deadZone.value).paddingLeft) || 0
+  const availW = viewport.value.clientWidth - 2 * pad - 8
+  const availH = viewport.value.clientHeight - 2 * pad - 8
+  view.setZoom(Math.min(availW / naturalW, availH / naturalH, 2))
+})
 
 provide<LineContext>(LineContextKey, {
   color: computed(() => line.value.color ?? '#000000'),
@@ -26,7 +71,11 @@ provide<LineContext>(LineContextKey, {
 })
 
 function doExport() {
-  exportMap(el.value)
+  withNaturalZoom(() => exportMap(el.value))
+}
+
+function doExportSvg() {
+  withNaturalZoom(() => exportSvgMap(el.value))
 }
 
 function onError(e: unknown) {
@@ -36,18 +85,24 @@ function onError(e: unknown) {
 
 onMounted(() => {
   exportSignal.on(doExport)
+  exportSvgSignal.on(doExportSvg)
   checkVersion(version.value, projectMinimumVersion)
 })
-onBeforeUnmount(() => exportSignal.off(doExport))
+onBeforeUnmount(() => {
+  exportSignal.off(doExport)
+  exportSvgSignal.off(doExportSvg)
+})
 </script>
 
 <template>
   <div class="map-editor">
-    <div class="editor-content">
-      <div class="dead-zone">
+    <div ref="viewport" class="editor-content">
+      <div ref="deadZone" class="dead-zone">
         <NuxtErrorBoundary v-if="!error" @error="onError">
-          <div ref="el">
-            <LineCanvas />
+          <div class="zoom-box" :style="{ zoom: effectiveZoom }">
+            <div ref="el">
+              <LineCanvas />
+            </div>
           </div>
         </NuxtErrorBoundary>
         <LineCanvasError v-if="error" />

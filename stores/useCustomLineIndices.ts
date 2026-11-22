@@ -2,16 +2,20 @@ import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import { ref } from 'vue'
 import { modeToShape } from '~/data/modes'
+import { useNetwork } from '~/stores/useNetwork'
 
 export const useCustomLineIndices = defineStore('customLineIndices', () => {
   const indices = ref<CustomLineIndexDescription[]>([])
+  const network = useNetwork()
 
+  // Indices personnalisés locaux (hors lignes du réseau courant)
   function getModeIndices(mode: Mode | null): CustomLineIndexDescription[] {
-    return indices.value.filter(index => index.mode === mode)
+    return indices.value.filter(index => index.mode === mode && !network.findById(index.id))
   }
 
+  // Le réseau courant passe avant les copies locales (celles enregistrées dans les plans)
   function findIndexById(id: string): CustomLineIndexDescription | null {
-    return indices.value.find(index => index.id === id) ?? null
+    return network.findById(id) ?? indices.value.find(index => index.id === id) ?? null
   }
 
   function deleteById(id: string): void {

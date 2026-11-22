@@ -10,7 +10,8 @@
       "custom_indices": "Índices personalizados",
       "line_name": "Línea {index}",
       "official_indices": "Índices oficiales",
-      "placeholder": "Seleccionar un índice"
+      "placeholder": "Seleccionar un índice",
+      "network_indices": "Red {name}"
     },
     "map_size_select": {
       "placeholder": "Seleccionar un tamaño"
@@ -46,6 +47,10 @@
       "bike": "Bicicleta",
       "boat": "Lanzadera fluvial",
       "brt": "BRT (Autobús de tránsito rápido)",
+      "metrolin": "Métrolin",
+      "edometrolin": "Édométrolin",
+      "hep": "HEP",
+      "hup": "HUP",
       "bus": "Autobús",
       "cable": "Teleférico",
       "metro": "Metro",
@@ -117,7 +122,16 @@
         "header": "Correspondencias de “{stopName}”",
         "mode": "Modo de transporte",
         "or": "O",
-        "service": "Servicio de transporte"
+        "service": "Servicio de transporte",
+        "empty": "No connection yet",
+        "add_line": "Add a line… (type \"HEP\", \"12\", \"RER A\"…)",
+        "add_service": "Add a service…",
+        "services": "Services",
+        "line_options": "Line options",
+        "group_walk": "Pedestrian connection (whole group)",
+        "line_walk": "Pedestrian connection before this line",
+        "remove": "Remove",
+        "hint": "Click a badge to change the line, add an ornament or remove it. Each line is grouped with its mode automatically."
       },
       "custom_index_editor": {
         "color": "Color",
@@ -285,11 +299,17 @@
       "custom_indices": "Índices personalizados",
       "export": "Exportar como PNG",
       "export_pdf": "Exportar como PDF",
+      "export_svg": "Exportar en formato SVG",
       "new_project": "Nuevo proyecto",
       "open": "Abrir",
       "save": "Guardar",
       "title": "Menú principal",
-      "troubleshooting": "Solución de problemas"
+      "troubleshooting": "Solución de problemas",
+      "network_current": "Red: {name}",
+      "network_default": "por defecto",
+      "network_import": "Importar una red",
+      "network_export": "Exportar la red",
+      "network_reset": "Volver a la red por defecto"
     },
     "nag": "<b>ATENCIÓN</b>: Aplicación en fase de desarrollo. Algunas funcionalidades no están disponibles o están incompletas.",
     "properties": {
@@ -337,11 +357,60 @@
           "detail": "El proyecto se ha guardado correctamente",
           "title": "Guardado correcto"
         }
+      },
+      "network": {
+        "success": {
+          "title": "Red importada",
+          "detail": "Las líneas de la red están disponibles",
+          "detail_warnings": "Red importada, pero se omitieron algunas líneas (ver consola)"
+        },
+        "failure": {
+          "title": "Error al importar la red",
+          "detail": "El archivo no es una red válida"
+        }
       }
     },
     "topbar": {
       "faq": "FAQ",
       "catch_phrase": "No está mal, ¿verdad? ¡Es francés 🇫🇷!"
+    },
+    "sidebar": {
+      "properties": "Properties",
+      "stops": "Stops",
+      "file": "File"
+    },
+    "editor_view": {
+      "toggle_sidebar": "Show / hide side panel",
+      "zoom_in": "Zoom in (Cmd + scroll)",
+      "zoom_out": "Zoom out",
+      "zoom_reset": "Back to 100 %",
+      "zoom_fit": "Fit to window"
+    },
+    "stops_panel": {
+      "count": "{n} stop(s)",
+      "from_list": "Paste a list",
+      "empty": "No branch yet. Create one, or paste a list of stations.",
+      "create_branch": "Create a branch",
+      "branch": "Branch {n}",
+      "name_placeholder": "Stop name",
+      "subtitle_placeholder": "Subtitle (point of interest)",
+      "terminus": "Terminus",
+      "connections": "Connections",
+      "move_up": "Move up",
+      "move_down": "Move down",
+      "delete": "Delete",
+      "spacer": "— spacer —",
+      "add_stop": "Add a stop"
+    },
+    "stops_from_list": {
+      "header": "Create stops from a list",
+      "help": "One station per line, in order.\n\"Name {'|'} Subtitle\" adds a point of interest, \"//\" forces a line break in the name.\nEmpty lines and lines starting with # are ignored.",
+      "placeholder": "La Défense {'|'} Grande Arche\nPont de Neuilly\nCharles de Gaulle – Étoile\nChâteau // de Vincennes",
+      "target_replace": "Replace the stops of branch {n}",
+      "target_new": "Add a new branch",
+      "terminus_ends": "Mark the first and last stops as terminus",
+      "apply": "Create stops",
+      "cancel": "Cancel"
     }
   }
 }

@@ -25,7 +25,11 @@ export default function useLoadProject() {
   const { version, line, presetBased } = storeToRefs(lineStore)
   const indicesStore = storeToRefs(useCustomLineIndices())
 
+  const { findIndexById } = useCustomLineIndices()
+
   function preload(project: Project) {
+    // Les lignes déjà connues (réseau courant ou indices locaux) n'ont pas besoin d'être importées
+    project.customIndices = (project.customIndices ?? []).filter(it => findIndexById(it.id) === null)
     if (project.customIndices.length > 0) {
       confirm.require({
         header: t('ui.dialogs.loading_custom_indices_prompt.header'),

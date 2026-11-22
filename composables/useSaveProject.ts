@@ -7,11 +7,14 @@ import { getCustomIndicesIds } from '~/utils/project'
 export default function useSaveProject() {
   const toast = useToast()
   const { version, line, presetBased } = storeToRefs(useProject())
-  const { indices } = storeToRefs(useCustomLineIndices())
+  const { findIndexById } = useCustomLineIndices()
 
   function stringifyLine() {
     const involvedCustomIndices = getCustomIndicesIds(line.value)
-    const customIndices = indices.value.filter(index => involvedCustomIndices.includes(index.id))
+    // Copie de secours : le plan reste lisible même sans le fichier réseau
+    const customIndices = involvedCustomIndices
+      .map(id => findIndexById(id))
+      .filter((index): index is CustomLineIndexDescription => index !== null)
 
     return JSON.stringify({
       version: version.value,

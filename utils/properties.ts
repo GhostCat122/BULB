@@ -12,6 +12,8 @@ export function modeToLineThickness(mode: Mode): string {
     case 'RER':
     case 'TRAIN':
     case 'TRAIN_RER':
+    case 'HEP':
+    case 'HUP':
       return '1.5'
     default:
       return '0.375'
@@ -33,6 +35,8 @@ export function modeToDotsColorPolicy(mode: Mode): DotsColorPolicy {
     case 'RER':
     case 'TRAIN':
     case 'TRAIN_RER':
+    case 'HEP':
+    case 'HUP':
       return 'WHITE'
     default:
       return 'INHERIT'
@@ -43,6 +47,8 @@ export function modeToTerminusFramePolicy(mode: Mode): boolean {
   switch (mode) {
     case 'RER':
     case 'TRAIN':
+    case 'HEP':
+    case 'HUP':
       return false
     default:
       return true

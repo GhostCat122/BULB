@@ -5,7 +5,7 @@ export default function useExportMap() {
   const toast = useToast()
 
   function exportMap(mapContainer: HTMLElement) {
-    htmlToImage.toBlob(mapContainer, {
+    return htmlToImage.toBlob(mapContainer, {
       pixelRatio: 4,
       canvasWidth: mapContainer.clientWidth,
       canvasHeight: mapContainer.clientHeight,

@@ -14,7 +14,8 @@
       "line_name": "Linea {index}",
       "official_indices": "Indici ufficiali",
       "placeholder": "Selezionare un indice",
-      "unknown_index": "Sconosciuto"
+      "unknown_index": "Sconosciuto",
+      "network_indices": "Rete {name}"
     },
     "line_style_select": {
       "placeholder": "Selezionare uno stile"
@@ -70,6 +71,10 @@
       "bike": "Bici",
       "boat": "Battello",
       "brt": "Autobus in sede riservata",
+      "metrolin": "Métrolin",
+      "edometrolin": "Édométrolin",
+      "hep": "HEP",
+      "hup": "HUP",
       "bus": "Autobus",
       "cable": "Funivia",
       "metro": "Metrpolitana",
@@ -143,7 +148,16 @@
         "header": "Coincidenze a “{stopName}”",
         "mode": "Mezzi di trasporto",
         "or": "o",
-        "service": "servizi di trasporto"
+        "service": "servizi di trasporto",
+        "empty": "No connection yet",
+        "add_line": "Add a line… (type \"HEP\", \"12\", \"RER A\"…)",
+        "add_service": "Add a service…",
+        "services": "Services",
+        "line_options": "Line options",
+        "group_walk": "Pedestrian connection (whole group)",
+        "line_walk": "Pedestrian connection before this line",
+        "remove": "Remove",
+        "hint": "Click a badge to change the line, add an ornament or remove it. Each line is grouped with its mode automatically."
       },
       "custom_index_editor": {
         "color": "Colore",
@@ -345,11 +359,17 @@
       "custom_indices": "Indici personalizzati",
       "export": "Esporta in PNG",
       "export_pdf": "Esporta in PDF",
+      "export_svg": "Esporta in formato SVG",
       "new_project": "Nuovo progetto",
       "open": "Apri",
       "save": "Salva",
       "title": "Menù principale",
-      "troubleshooting": "Assistenza"
+      "troubleshooting": "Assistenza",
+      "network_current": "Rete: {name}",
+      "network_default": "predefinita",
+      "network_import": "Importa una rete",
+      "network_export": "Esporta la rete",
+      "network_reset": "Torna alla rete predefinita"
     },
     "nag": "<b>ATTENZIONE</b>: Applicazione è in fase di sviluppo. Alcune funzioni non sono ancora disponibili, o sono incomplete.",
     "properties": {
@@ -402,11 +422,60 @@
           "detail": "Il progetto è stato salvato correttamente",
           "title": "Salvataggio avvenuto"
         }
+      },
+      "network": {
+        "success": {
+          "title": "Rete importata",
+          "detail": "Le linee della rete sono disponibili",
+          "detail_warnings": "Rete importata, ma alcune linee sono state ignorate (vedi console)"
+        },
+        "failure": {
+          "title": "Importazione della rete non riuscita",
+          "detail": "Il file non è una rete valida"
+        }
       }
     },
     "topbar": {
       "faq": "FAQ",
       "catch_phrase": "Bello eh? È made in France 🇫🇷"
+    },
+    "sidebar": {
+      "properties": "Properties",
+      "stops": "Stops",
+      "file": "File"
+    },
+    "editor_view": {
+      "toggle_sidebar": "Show / hide side panel",
+      "zoom_in": "Zoom in (Cmd + scroll)",
+      "zoom_out": "Zoom out",
+      "zoom_reset": "Back to 100 %",
+      "zoom_fit": "Fit to window"
+    },
+    "stops_panel": {
+      "count": "{n} stop(s)",
+      "from_list": "Paste a list",
+      "empty": "No branch yet. Create one, or paste a list of stations.",
+      "create_branch": "Create a branch",
+      "branch": "Branch {n}",
+      "name_placeholder": "Stop name",
+      "subtitle_placeholder": "Subtitle (point of interest)",
+      "terminus": "Terminus",
+      "connections": "Connections",
+      "move_up": "Move up",
+      "move_down": "Move down",
+      "delete": "Delete",
+      "spacer": "— spacer —",
+      "add_stop": "Add a stop"
+    },
+    "stops_from_list": {
+      "header": "Create stops from a list",
+      "help": "One station per line, in order.\n\"Name {'|'} Subtitle\" adds a point of interest, \"//\" forces a line break in the name.\nEmpty lines and lines starting with # are ignored.",
+      "placeholder": "La Défense {'|'} Grande Arche\nPont de Neuilly\nCharles de Gaulle – Étoile\nChâteau // de Vincennes",
+      "target_replace": "Replace the stops of branch {n}",
+      "target_new": "Add a new branch",
+      "terminus_ends": "Mark the first and last stops as terminus",
+      "apply": "Create stops",
+      "cancel": "Cancel"
     }
   }
 }

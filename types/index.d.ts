@@ -14,6 +14,11 @@ declare global {
     | 'TRAIN_RER'
     | 'TRAM'
     | 'VELO'
+    // Panem Marsanos
+    | 'METROLIN'
+    | 'EDOMETROLIN'
+    | 'HEP'
+    | 'HUP'
   type Service =
     'FUNICULAR'
     | 'MAIN_STATION'
@@ -75,6 +80,7 @@ declare global {
     value: I
     label: string
     color?: string
+    textColor?: string
   }
 
   interface ServiceChoice {
@@ -100,6 +106,10 @@ declare global {
     shape: IndexShape
     mode: Mode
     color: string
+    /** Couleur du texte imposée (réseau) ; sinon calculée selon le contraste */
+    textColor?: string
+    /** Libellé lisible (réseau) */
+    name?: string
   }
 
   interface Project {

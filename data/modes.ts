@@ -9,6 +9,11 @@ export const MODES: ModeChoice[] = [
   { value: 'TRAIN', label: 'data.mode.transilien' },
   { value: 'TRAM', label: 'data.mode.tram' },
   { value: 'VELO', label: 'data.mode.bike' },
+  // Panem Marsanos
+  { value: 'METROLIN', label: 'data.mode.metrolin' },
+  { value: 'EDOMETROLIN', label: 'data.mode.edometrolin' },
+  { value: 'HEP', label: 'data.mode.hep' },
+  { value: 'HUP', label: 'data.mode.hup' },
 ]
 
 export function findModeByValue(value: Mode | null): ModeChoice | null {
@@ -18,10 +23,14 @@ export function findModeByValue(value: Mode | null): ModeChoice | null {
 export function modeToShape(mode: Mode): IndexShape {
   switch (mode) {
     case 'METRO':
+    case 'METROLIN':
+    case 'EDOMETROLIN':
       return 'CIRCLE'
     case 'RER':
     case 'TRAIN':
     case 'TRAIN_RER':
+    case 'HEP':
+    case 'HUP':
       return 'ROUNDED_SQUARE'
     case 'BOAT':
     case 'BRT':

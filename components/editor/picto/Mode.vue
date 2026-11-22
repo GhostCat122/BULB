@@ -8,13 +8,16 @@ const {
 }>()
 
 const circle = computed(() => mode === 'METRO')
+const hexagon = computed(() => ['METROLIN', 'EDOMETROLIN'].includes(mode ?? ''))
+const panem = computed(() => ['METROLIN', 'EDOMETROLIN', 'HEP', 'HUP'].includes(mode ?? ''))
 const roundRectangle = computed(() => ['RER', 'TER', 'TRAIN', 'TRAIN_RER'].includes(mode ?? ''))
+const cartouche = computed(() => ['HEP', 'HUP'].includes(mode ?? ''))
 const square = computed(() => ['BOAT', 'BUS', 'BRT', 'CABLE', 'NOCTILIEN', 'TRAM', 'VELO'].includes(mode ?? ''))
 </script>
 
 <template>
   <div class="relative picto-wrapper">
-    <div class="absolute" :class="{ circle, 'round-rectangle': roundRectangle, square }" />
+    <div class="absolute" :class="{ circle, 'round-rectangle': roundRectangle, square, hexagon, cartouche }" />
     <MBoat v-if="mode === 'BOAT'" />
     <MBRT v-if="mode === 'BRT'" />
     <MBus v-if="mode === 'BUS'" />
@@ -25,6 +28,7 @@ const square = computed(() => ['BOAT', 'BUS', 'BRT', 'CABLE', 'NOCTILIEN', 'TRAM
     <MTram v-if="mode === 'TRAM'" />
     <MTransilien v-if="mode === 'TRAIN'" />
     <MVelo v-if="mode === 'VELO'" />
+    <MPanem v-if="panem && mode" :mode="mode" />
   </div>
 </template>
 
@@ -50,6 +54,24 @@ const square = computed(() => ['BOAT', 'BUS', 'BRT', 'CABLE', 'NOCTILIEN', 'TRAM
   left: .0625em;
   min-width: .875em;
   min-height: .875em;
+}
+
+.hexagon {
+  background: white;
+  top: .04em;
+  left: .04em;
+  min-width: .92em;
+  min-height: .92em;
+  clip-path: polygon(100% 50%, 75% 7%, 25% 7%, 0 50%, 25% 93%, 75% 93%);
+}
+
+.cartouche {
+  border-radius: .12em;
+  background: white;
+  top: .22em;
+  left: .04em;
+  min-width: .92em;
+  min-height: .56em;
 }
 
 .square {

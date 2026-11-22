@@ -14,7 +14,8 @@
       "line_name": "Ligne {index}",
       "official_indices": "Indices officiels",
       "placeholder": "Sélectionner un indice",
-      "unknown_index": "Inconnu"
+      "unknown_index": "Inconnu",
+      "network_indices": "Réseau {name}"
     },
     "line_style_select": {
       "placeholder": "Sélectionner un style"
@@ -70,6 +71,10 @@
       "bike": "Vélo",
       "boat": "Navette fluviale",
       "brt": "Busilien (BHNS)",
+      "metrolin": "Métrolin",
+      "edometrolin": "Édométrolin",
+      "hep": "HEP",
+      "hup": "HUP",
       "bus": "Bus",
       "cable": "Téléphérique",
       "metro": "Métro",
@@ -152,7 +157,16 @@
         "header": "Correspondances de “{stopName}”",
         "mode": "Mode de transport",
         "or": "Ou",
-        "service": "Service de transport"
+        "service": "Service de transport",
+        "empty": "Aucune correspondance pour l’instant",
+        "add_line": "Ajouter une ligne… (tape « HEP », « 12 », « RER A »…)",
+        "add_service": "Ajouter un service…",
+        "services": "Services",
+        "line_options": "Options de la ligne",
+        "group_walk": "Correspondance piétonne (tout le groupe)",
+        "line_walk": "Correspondance piétonne avant cette ligne",
+        "remove": "Retirer",
+        "hint": "Clique sur une pastille pour changer la ligne, ajouter une décoration ou la retirer. Chaque ligne se range automatiquement avec son mode."
       },
       "custom_index_editor": {
         "color": "Couleur",
@@ -379,11 +393,17 @@
       "custom_indices": "Indices personnalisés",
       "export": "Exporter au format PNG",
       "export_pdf": "Exporter au format PDF",
+      "export_svg": "Exporter au format SVG",
       "new_project": "Nouveau projet",
       "open": "Ouvrir",
       "save": "Sauvegarder",
       "title": "Menu principal",
-      "troubleshooting": "Dépannage"
+      "troubleshooting": "Dépannage",
+      "network_current": "Réseau : {name}",
+      "network_default": "par défaut",
+      "network_import": "Importer un réseau",
+      "network_export": "Exporter le réseau",
+      "network_reset": "Revenir au réseau par défaut"
     },
     "nag": "<b>RAPPEL</b> : Application en phase de développement. Certaines fonctionnalités ne sont pas encore disponibles ou sont incomplètes.",
     "properties": {
@@ -436,6 +456,17 @@
           "detail": "Le projet a été sauvegardé avec succès",
           "title": "Sauvegarde réussie"
         }
+      },
+      "network": {
+        "success": {
+          "title": "Réseau importé",
+          "detail": "Les lignes du réseau sont disponibles",
+          "detail_warnings": "Réseau importé, mais certaines lignes ont été ignorées (détails dans la console)"
+        },
+        "failure": {
+          "title": "Échec de l’import du réseau",
+          "detail": "Le fichier n’est pas un réseau valide"
+        }
       }
     },
     "topbar": {
@@ -443,6 +474,44 @@
       "faq": "FAQ",
       "changelog": "Journal des modifications",
       "catch_phrase": "Pas mal non ? C’est français 🇫🇷"
+    },
+    "sidebar": {
+      "properties": "Propriétés",
+      "stops": "Arrêts",
+      "file": "Fichier"
+    },
+    "editor_view": {
+      "toggle_sidebar": "Afficher / masquer le panneau latéral",
+      "zoom_in": "Zoom avant (Cmd + molette)",
+      "zoom_out": "Zoom arrière",
+      "zoom_reset": "Revenir à 100 %",
+      "zoom_fit": "Ajuster à la fenêtre"
+    },
+    "stops_panel": {
+      "count": "{n} arrêt(s)",
+      "from_list": "Coller une liste",
+      "empty": "Aucune branche pour l’instant. Crée-en une, ou colle directement une liste de stations.",
+      "create_branch": "Créer une branche",
+      "branch": "Branche {n}",
+      "name_placeholder": "Nom de l’arrêt",
+      "subtitle_placeholder": "Sous-titre (point d’intérêt)",
+      "terminus": "Terminus",
+      "connections": "Correspondances",
+      "move_up": "Monter",
+      "move_down": "Descendre",
+      "delete": "Supprimer",
+      "spacer": "— espacement —",
+      "add_stop": "Ajouter un arrêt"
+    },
+    "stops_from_list": {
+      "header": "Créer des arrêts depuis une liste",
+      "help": "Une station par ligne, dans l’ordre.\n« Nom {'|'} Sous-titre » pour ajouter un point d’intérêt, « // » pour un retour à la ligne dans le nom.\nLes lignes vides et celles commençant par # sont ignorées.",
+      "placeholder": "La Défense {'|'} Grande Arche\nPont de Neuilly\nCharles de Gaulle – Étoile\nChâteau // de Vincennes",
+      "target_replace": "Remplacer les arrêts de la branche {n}",
+      "target_new": "Ajouter une nouvelle branche",
+      "terminus_ends": "Marquer le premier et le dernier arrêt comme terminus",
+      "apply": "Créer les arrêts",
+      "cancel": "Annuler"
     }
   }
 }
